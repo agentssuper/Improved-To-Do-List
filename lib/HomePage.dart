@@ -69,8 +69,27 @@ class _HomePageState extends State<HomePage> {
                         onTap: () {
                           print(todoController.text);
                           setState(() {
-                            todos.add(ToDoModel(
-                                title: todoController.text, isDone: false));
+                            if (todoController.text != '') {
+                              todos.add(ToDoModel(
+                                  title: todoController.text, isDone: false));
+                            } else {
+                              showDialog(
+                                  barrierDismissible: false,
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text("Write something first!"),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text('GOT IT!'),
+                                        )
+                                      ],
+                                    );
+                                  });
+                            }
                             todoController.text = "";
                           });
                         },
